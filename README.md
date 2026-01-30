@@ -14,11 +14,14 @@ Pour exécuter ce projet, il faut installer ainsi que les bibliothèques suivant
 * **Pygame** : Pour l'affichage graphique.
 
 ## Lancement de la simulation 
+Pour lancer une simulation sans interface graphique : taper **python main.py** dans le bash
+Pour lancer une simulation avec interface graphique : taper **python main_guy.py** dans le bash
 
-```bash
-python main_gui.py
-
-```
+## Details des fichiers
+**entities.py** : classes des entités (grass, wolf, sheep)
+**grid.py** : classe de la grille
+**main.py** : fichier main (sans interface graphique)
+**main_gui.py** : fichier main (avec interface graphique)
 
 ## Auteurs
 Nicolas DEMORE, Josselin DAVION--JOUFFRE, Ziad BALBZIOUI, Eole RUDANT
