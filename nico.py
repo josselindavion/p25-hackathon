@@ -26,6 +26,7 @@ class Wolf:
     #déplace le loup à une nouvelle position
     def deplace(self, new_position):
         self.position = new_position
+        self.energy -= WOLF_ENERGY_LOSS_PER_TURN  # Perte d'énergie à chaque déplacement
 
     #augmente/diminue le niveau d'énergie du loup
     def energy_gain(self, energy_gain: int):

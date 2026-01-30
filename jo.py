@@ -26,7 +26,7 @@ class Sheep:
     ## Méthode pour actualiser la position du mouton ##
     def deplace(self, new_position:tuple):
         self.position = new_position
-        self.energy -= 1  ## Déplacement coûte de l'énergie
+        self.energy -= SHEEP_ENERGY_LOSS_PER_TURN  ## Déplacement coûte de l'énergie
     
     ## Méthode pour actualiser l'énergie du mouton #
     def energy_gain(self, energy_gain:int):
@@ -226,11 +226,13 @@ class Grid:
 
             
         ## SUPPRESSION DES MOUTONS MORTS ##
+        sheep.is_alive() ## Verif de l'energie/age
         for sheep in self.list_sheep.copy():
             if not sheep.alive:
                 self.list_sheep.remove(sheep)
         
         ## SUPPRESSION DES LOUPS MORTS ##
+        wolf.is_alive()
         for wolf in self.list_wolf.copy():
             if not wolf.alive:
                 self.list_wolf.remove(wolf)
