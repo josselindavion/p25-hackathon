@@ -1,6 +1,6 @@
-GRID_SIZE = (30, 30)  # Taille de la grille (largeur, hauteur)
-INITIAL_SHEEP = 10   # Nombre initial de moutons
-INITIAL_WOLVES = 3   # Nombre initial de loups
+GRID_SIZE = (40, 40)  # Taille de la grille (largeur, hauteur)
+INITIAL_SHEEP = 45   # Nombre initial de moutons
+INITIAL_WOLVES = 15   # Nombre initial de loups
 INITIAL_GRASS_COVERAGE = 0.3  # Pourcentage initial de couverture végétale
 SHEEP_INITIAL_ENERGY = 20
 WOLF_INITIAL_ENERGY = 40
