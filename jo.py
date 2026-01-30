@@ -105,9 +105,27 @@ class Grid:
                 new_wolf = Wolf(id=len(self.list_wolf), position=(x,y), energy=WOLF_INITIAL_ENERGY, age=0, alive=True)
                 self.add_wolf(new_wolf)
     
-    
-    
-    def evolve(self):
+    ## Méthode pour afficher la grille ##
+    def display_grid(self):
+        grid = [['.' for _ in range(self.width)] for _ in range(self.height)]
+        for sheep in self.list_sheep:
+            x, y = sheep.position
+            grid[y][x] = 'S'
+        for wolf in self.list_wolf:
+            x, y = wolf.position
+            grid[y][x] = 'W'
+        for grass in self.list_grass:
+            if grass.alive:
+                x, y = grass.position
+                grid[y][x] = 'G'
+            else:
+                x, y = grass.position
+                grid[y][x] = 'g'
+        for row in grid:
+            print(' '.join(row))
+   
+    ## evolve renvoi False si la simulation doit s'arrêter ##
+    def evolve(self)-> bool:
         
         ## INCREMENTATION AGE DE TOUS LES ANIMAUX ##
         for sheep in self.list_sheep:
@@ -196,3 +214,48 @@ class Grid:
         for wolf in self.list_wolf.copy():
             if not wolf.alive:
                 self.list_wolf.remove(wolf)
+        
+        ## GESTION DE LA REPRODUCTION - MOUTONS ##
+        ## On vérifie pour chaque mouton s'il peut se reproduire (energie supérieur au seuil) et on crée un nouveau mouton ##
+        ## Le nouveau mouton est placé sur une case adjacente vide aléatoirement ##
+        ## Si aucune case adjacente n'est libre, pas de reproduction ##
+        for sheep in self.list_sheep.copy():
+            if sheep.energy >= SHEEP_REPRODUCTION_ENERGY:
+                x, y = sheep.position
+                adjacent_positions = [ (x+dx, y+dy) for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)] 
+                                       if 0 <= x+dx < self.width and 0 <= y+dy < self.height ]
+                free_positions = [pos for pos in adjacent_positions 
+                                  if not any(s.position == pos for s in self.list_sheep)]
+                if free_positions:
+                    new_position = free_positions[0] ## Prendre la première position libre ##
+                    new_sheep = Sheep(id=len(self.list_sheep), position=new_position, energy=SHEEP_INITIAL_ENERGY, age=0, alive=True)
+                    self.add_sheep(new_sheep)
+                    sheep.energy -= SHEEP_INITIAL_ENERGY  ## Coût énergétique de la reproduction ##
+        
+        ## GESTION DE LA REPRODUCTION - LOUPS ##
+        for wolf in self.list_wolf.copy():
+            if wolf.energy >= WOLF_REPRODUCTION_ENERGY:
+                x, y = wolf.position
+                adjacent_positions = [ (x+dx, y+dy) for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)] 
+                                       if 0 <= x+dx < self.width and 0 <= y+dy < self.height ]
+                free_positions = [pos for pos in adjacent_positions 
+                                  if not any(w.position == pos for w in self.list_wolf)]
+                if free_positions:
+                    new_position = free_positions[0] ## Prendre la première position libre ##
+                    new_wolf = Wolf(id=len(self.list_wolf), position=new_position, energy=WOLF_INITIAL_ENERGY, age=0, alive=True)
+                    self.add_wolf(new_wolf)
+                    wolf.energy -= WOLF_INITIAL_ENERGY / 2  ## Coût énergétique de la reproduction ##
+
+        ## AFFICHAGE DE L'ÉTAT ACTUEL DE LA GRILLE ##
+        self.display_grid()
+
+        ## VERIFICATION CONDITIONS DE FIN DE LA SIMULATION ##
+        ##  Condition 1 : Plus de moutons ##
+        if len(self.list_sheep) == 0:
+            print("Simulation ends: All sheep are dead.")
+            return False
+        ##  Condition 2 : Plus de loups ##
+        if len(self.list_wolf) == 0:
+            print("Simulation ends: All wolves are dead.")
+            return False
+        return True
