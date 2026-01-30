@@ -1,3 +1,6 @@
+
+
+
 class Wolf:
 
     #paramètres initiales de la classe.
@@ -31,6 +34,3 @@ class Wolf:
 
 
 
-
-w = Wolf(1, (10, 20), 100, 5)
-print(w)  

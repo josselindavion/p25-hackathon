@@ -49,5 +49,3 @@ class Grid() :
             representation += " | ".join( f"{cell[0]},{cell[1]}" for cell in row ) + "\n"
         return representation
 # Exemple d'utilisation
-
-    
