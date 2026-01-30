@@ -111,22 +111,22 @@ class Grid:
     
     ## Méthode pour afficher la grille ##
     def display_grid(self):
-        grid = [['.' for _ in range(self.width)] for _ in range(self.height)]
+        grid = [[(0,0) for _ in range(self.width)] for _ in range(self.height)]
         for sheep in self.list_sheep:
             x, y = sheep.position
-            grid[y][x] = 'S'
+            grid[y][x][1]= 'S'
         for wolf in self.list_wolf:
             x, y = wolf.position
-            grid[y][x] = 'W'
+            grid[y][x][1] = 'W'
         for grass in self.list_grass:
             if grass.alive:
                 x, y = grass.position
-                grid[y][x] = 'G'
+                grid[y][x][0]= 'G'
             else:
                 x, y = grass.position
-                grid[y][x] = 'g'
+                grid[y][x][0] = 'g'
         for row in grid:
-            print(' '.join(row))
+            print(' '.join([cell[0] + cell[1] for cell in row]))
    
     ## evolve renvoi False si la simulation doit s'arrêter ##
     def evolve(self)-> bool:

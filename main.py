@@ -16,3 +16,5 @@ def main():
         print(f"Tour {tour + 1}")
         grid.evolve() 
     print("Simulation terminée.")
+
+main()
