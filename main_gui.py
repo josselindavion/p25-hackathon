@@ -199,3 +199,5 @@ def main_gui():
 
     pygame.quit()
     sys.exit()
+
+main_gui()
