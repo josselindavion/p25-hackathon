@@ -1,12 +1,13 @@
 import pygame
 import sys
+import random
 
-# --- PARAMÈTRES D'AFFICHAGE ---
-TAILLE_CASE = 20          # 30 cases * 20 pixels = fenêtre de 600x600 pixels
+#Paramètres d'affichage
+TAILLE_CASE = 20          
 COULEUR_TERRE = (139, 69, 19)    # Marron (Sol vide)
 COULEUR_HERBE = (34, 139, 34)    # Vert (Herbe)
 COULEUR_MOUTON = (255, 255, 255) # Blanc (Mouton)
-COULEUR_LOUP = (220, 20, 60)     # Rouge (Loup)
+COULEUR_LOUP = (0, 0, 0)     # Noir (Loup)
 COULEUR_GRILLE = (50, 50, 50)    # Gris foncé (Lignes de séparation)
 
 class Afficheur:
@@ -67,3 +68,26 @@ class Afficheur:
 
     def fermer(self):
         pygame.quit()
+
+
+
+if __name__ == "__main__":
+    GRID_SIZE = 30
+    
+    # Création de la structure vide
+    grille = [[[0, "."] for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
+
+    possibilites = ['W', 'S', '#', '.']
+    
+    # 1. Création de l'objet Afficheur (Instanciation)
+    visu = Afficheur(grille)
+
+
+    for y in range(GRID_SIZE):
+        for x in range(GRID_SIZE):
+            grille[y][x][0] = random.randint(0, 1)      # Herbe 0 ou 1
+            grille[y][x][1] = random.choice(possibilites) # Animal
+        
+        
+    visu.update(grille)
+        
