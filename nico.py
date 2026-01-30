@@ -16,6 +16,7 @@ class Wolf:
     def deplace(self, new_position):
         self.position = new_position
 
+
 w = Wolf(1, (10, 20), 100, 5)
 print(w)  
 
