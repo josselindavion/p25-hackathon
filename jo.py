@@ -126,7 +126,8 @@ class Grid:
                 x, y = grass.position
                 grid[y][x][0] = 'g'
         for row in grid:
-            print(' '.join([cell[0] + cell[1] for cell in row]))
+            print(' | '.join([f"{cell[0]}{cell[1]}" for cell in row]))
+        print("\n")
    
     ## evolve renvoi False si la simulation doit s'arrêter ##
     def evolve(self)-> bool:
