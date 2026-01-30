@@ -1,4 +1,4 @@
-GRID_SIZE = (20, 20)  # Taille de la grille (largeur, hauteur)
+GRID_SIZE = (5, 5)  # Taille de la grille (largeur, hauteur)
 INITIAL_SHEEP = 10   # Nombre initial de moutons
 INITIAL_WOLVES = 10   # Nombre initial de loups
 INITIAL_GRASS_COVERAGE = 0.3  # Pourcentage initial de couverture végétale
