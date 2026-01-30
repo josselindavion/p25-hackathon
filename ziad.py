@@ -17,7 +17,7 @@ class Grid() :
         self.height = height
         self.grid = [ [ ( None , None) for x in range(width) ] for y in range(height) ]
 
-        for i in initial_sheep :
+        for i in range(initial_sheep ):
             x = np.random.randint(0, width)
             y = np.random.randint(0, height)
 
@@ -25,14 +25,14 @@ class Grid() :
 
             self.set(x, y, (current_grass, "S") )
 
-        for j in initial_wolves:
+        for j in range(initial_wolves):
             x = np.random.randint(0, width)
             y = np.random.randint(0, height)
 
             current_grass, current_entity = self.get(x, y)
             self.set(x, y, ( current_grass , "W") )
 
-        for k in initial_grass:
+        for k in range(initial_grass)
             x = np.random.randint(0, width)
             y = np.random.randint(0, height)
 
@@ -47,3 +47,6 @@ class Grid() :
         return self.grid[y][x]
     
 
+g = Grid(10, 10, 5, 3, 20)
+
+print()
