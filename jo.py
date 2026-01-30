@@ -52,15 +52,15 @@ class Grass:
         return f'Grass(position={self.position}, age={self.age}, alive={self.alive})'
     
     ## Méthode du temps de repousse ##
-    ## On fait un grow_back à chaque tour sur celles qui sont mortes ##
+    ## On fait un grow_back à chaque tour à toutes les cellules ##
     def grow_back(self):
         self.age += 1
         if self.age >= GRASS_REGROWTH_TIME:
             self.alive = True
-            self.age = 0
 
     def die(self):
         self.alive = False
+        self.age = 0
 
 ## CLASSE DE LA GRILLE ##
 class Grid:
