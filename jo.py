@@ -1,5 +1,4 @@
-import numpy as np
-
+from nico import Wolf
 ## CLASSE DU MOUTON ##
 class Sheep:
     

@@ -1,5 +1,4 @@
 ## Importation des classes ##
-import numpy as np
 from nico import Wolf
 from jo import Sheep, Grass, Grid
 
@@ -33,7 +32,7 @@ GRASS_GROWTH_PROBABILITY = 0.08
 GRASS_REGROWTH_TIME = 7
 
 # --- Paramètres de la Simulation ---
-MAX_TURNS = 500  # Nombre maximum de tours
+MAX_TURNS = 5  # Nombre maximum de tours
 
 def main():
     ## Initialisation de la grille ##
@@ -43,3 +42,6 @@ def main():
         print(f"Tour {tour + 1}")
         grid.evolve() 
     print("Simulation terminée.")
+
+if __name__ == "__main__":
+    main()
