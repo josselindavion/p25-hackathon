@@ -91,9 +91,15 @@ class Grid:
                 self.add_sheep(new_sheep)
 
         ## Initialisation de l'herbe sur la grille ##
-        ## Il faut avoir de la grass alive partout au début ##
-        for x in range(self.width):
-            for y in range(self.height):
+        ## Il faut avoir de la grass alive sur un pourcentage INITIAL_GRASS_COVERAGE ##
+        total_cells = self.width * self.height
+        initial_grass_count = int(total_cells * INITIAL_GRASS_COVERAGE)
+        while len([grass for grass in self.list_grass if grass.alive]) < initial_grass_count:
+            x = np.random.randint(0, self.width)
+            y = np.random.randint(0, self.height)
+            ## Eviter de créer plusieurs herbes au même endroit ##
+            position_occupied = any(grass.position == (x,y) for grass in self.list_grass)
+            if not position_occupied:
                 new_grass = Grass(position=(x,y), age=0, alive=True)
                 self.list_grass.append(new_grass)
                 
