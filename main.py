@@ -43,6 +43,3 @@ def main():
         print(f"Tour {tour + 1}")
         grid.evolve() 
     print("Simulation terminée.")
-
-if __name__ == "__main__":
-    main()
