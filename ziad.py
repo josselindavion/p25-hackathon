@@ -1,6 +1,3 @@
-
-from jo import Sheep , Grass
-from nico import Wolf
 import numpy as np
 
 
@@ -32,7 +29,7 @@ class Grid() :
             current_grass, current_entity = self.get(x, y)
             self.set(x, y, ( current_grass , "W") )
 
-        for k in range(initial_grass)
+        for k in range(initial_grass): 
             x = np.random.randint(0, width)
             y = np.random.randint(0, height)
 
@@ -46,7 +43,11 @@ class Grid() :
     def get(self, x, y) :
         return self.grid[y][x]
     
+    def __repr__(self) :
+        representation = ""
+        for row in self.grid :
+            representation += " | ".join( f"{cell[0]},{cell[1]}" for cell in row ) + "\n"
+        return representation
+# Exemple d'utilisation
 
-g = Grid(10, 10, 5, 3, 20)
-
-print()
+    
