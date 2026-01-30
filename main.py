@@ -11,6 +11,7 @@ def main():
     ## Initialisation de la grille ##
     grid = Grid(GRID_SIZE[0], GRID_SIZE[1])
     grid.initialisation(INITIAL_SHEEP, INITIAL_WOLVES)
+    grid.display_grid()
     for tour in range(MAX_TURNS):
         print(f"Tour {tour + 1}")
         grid.evolve() 
