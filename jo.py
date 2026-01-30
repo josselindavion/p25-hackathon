@@ -111,7 +111,7 @@ class Grid:
     
     ## Méthode pour afficher la grille ##
     def display_grid(self):
-        grid = [[(0,0) for _ in range(self.width)] for _ in range(self.height)]
+        grid = [[[0,0] for _ in range(self.width)] for _ in range(self.height)]
         for sheep in self.list_sheep:
             x, y = sheep.position
             grid[y][x][1]= 'S'
