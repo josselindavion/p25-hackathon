@@ -120,16 +120,6 @@ class Grid:
             if not grass.alive:
                 grass.grow_back()
         
-
-        ## SUPPRESSION DES MOUTONS MORTS ##
-        for sheep in self.list_sheep.copy():
-            if not sheep.alive:
-                self.list_sheep.remove(sheep)
-        
-        ## SUPPRESSION DES LOUPS MORTS ##
-        for wolf in self.list_wolf.copy():
-            if not wolf.alive:
-                self.list_wolf.remove(wolf)
         
         ## PHASE MOUTONS ##
         for sheep in self.list_sheep:
@@ -160,3 +150,49 @@ class Grid:
                     sheep.energy_gain(SHEEP_ENERGY_GAIN)
                     grass.die()  ## L'herbe meurt après avoir été mangée ##
                     break  ## Sortir de la boucle une fois l'herbe trouvée et mangée ##
+
+        ## PHASE LOUPS ##
+        for wolf in self.list_wolf:
+
+            ## Si il y a un mouton sur une case adjcente, le loup se déplace dessus et mange le mouton ##
+            x, y = wolf.position
+            ## Trouver les positions adjacentes dans la grille sans modulo ##
+            adjacent_positions = [ (x+dx, y+dy) for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)] 
+                                   if 0 <= x+dx < self.width and 0 <= y+dy < self.height ]
+            ## On regarde si il y a des moutons sur ces positions ##
+            sheep_positions = [pos for pos in adjacent_positions 
+                               if any(sheep.position == pos for sheep in self.list_sheep)]
+            if sheep_positions:
+                new_position = sheep_positions[0]  ## Prendre la première position avec un mouton ##
+                wolf.deplace(new_position)
+                ## Manger le mouton ##
+                for sheep in self.list_sheep:
+                    if sheep.position == new_position:
+                        wolf.energy_gain(WOLF_ENERGY_GAIN)
+                        sheep.alive = False  ## Le mouton est tué ##
+                        break  ## Sortir de la boucle une fois le mouton trouvé et mangé ##
+
+            else:
+                ## Sinon le loup se déplace aléatoirement sur une case adjacente ##
+                if adjacent_positions:
+                    new_position = adjacent_positions[np.random.randint(0, len(adjacent_positions))]
+                    wolf.deplace(new_position)
+            
+            ## Tous les moutons adjacents au loup après son déplacement sont mangés ##
+            for sheep in self.list_sheep.copy():
+                if sheep.position in adjacent_positions:
+                    wolf.energy_gain(WOLF_ENERGY_GAIN)
+                    sheep.alive = False  ## Le mouton est tué ##
+            
+            ## NB : le loup perd de l'energie en se déplaçant (déjà géré dans la méthode deplace) ##
+
+            
+        ## SUPPRESSION DES MOUTONS MORTS ##
+        for sheep in self.list_sheep.copy():
+            if not sheep.alive:
+                self.list_sheep.remove(sheep)
+        
+        ## SUPPRESSION DES LOUPS MORTS ##
+        for wolf in self.list_wolf.copy():
+            if not wolf.alive:
+                self.list_wolf.remove(wolf)
