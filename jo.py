@@ -102,6 +102,14 @@ class Grid:
             if not position_occupied:
                 new_grass = Grass(position=(x,y), age=0, alive=True)
                 self.list_grass.append(new_grass)
+        
+        # Mettre de la grass morte sur le reste des cases
+        for x in range(self.width):
+            for y in range(self.height):
+                position_occupied = any(grass.position == (x,y) for grass in self.list_grass)
+                if not position_occupied:
+                    new_grass = Grass(position=(x,y), age=0, alive=False)
+                    self.list_grass.append(new_grass)
                 
         while len(self.list_wolf) < initial_wolf:
             x = np.random.randint(0, self.width)
