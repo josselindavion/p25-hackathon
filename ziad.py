@@ -1,15 +1,44 @@
 
-from jo import Ship
+from jo import Sheep , Grass
 from nico import Wolf
+import numpy as np
+
+
+SHEEP_INITIAL_ENERGY = 20
+WOLF_INITIAL_ENERGY = 40
 
 
 
 class Grid() : 
 
-    def __init__(self, width, height) :
+    def __init__(self, width, height, initial_sheep , initial_wolves, initial_grass) :
+
         self.width = width
         self.height = height
-        self.grid = [ [ [ None , None ] for x in range(width) ] for y in range(height) ]
+        self.grid = [ [ ( None , None) for x in range(width) ] for y in range(height) ]
+
+        for i in initial_sheep :
+            x = np.random.randint(0, width)
+            y = np.random.randint(0, height)
+
+            current_grass, current_entity = self.get(x, y)
+
+            self.set(x, y, (current_grass, "S") )
+
+        for j in initial_wolves:
+            x = np.random.randint(0, width)
+            y = np.random.randint(0, height)
+
+            current_grass, current_entity = self.get(x, y)
+            self.set(x, y, ( current_grass , "W") )
+
+        for k in initial_grass:
+            x = np.random.randint(0, width)
+            y = np.random.randint(0, height)
+
+            current_grass, current_entity = self.get(x, y)
+            self.set(x, y, (1 , current_entity) )
+        
 
     def set(self, x, y, value) :
         self.grid[y][x] = value
