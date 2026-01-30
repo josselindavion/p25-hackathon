@@ -51,7 +51,7 @@ class Grass:
     ## On fait un grow_back à chaque tour sur celles qui sont mortes ##
     def grow_back(self):
         self.age += 1
-        if self.age >= GRASS_GROWTH_TIME:
+        if self.age >= GRASS_REGROWTH_TIME:
             self.alive = True
             self.age = 0
 
@@ -165,7 +165,7 @@ class Grid:
             ## Alimentation du mouton si il y a de l'herbe vivante sur sa position ##
             for grass in self.list_grass:
                 if grass.position == sheep.position and grass.alive:
-                    sheep.energy_gain(SHEEP_ENERGY_GAIN)
+                    sheep.energy_gain(SHEEP_ENERGY_FROM_GRASS)
                     grass.die()  ## L'herbe meurt après avoir été mangée ##
                     break  ## Sortir de la boucle une fois l'herbe trouvée et mangée ##
 
@@ -186,7 +186,7 @@ class Grid:
                 ## Manger le mouton ##
                 for sheep in self.list_sheep:
                     if sheep.position == new_position:
-                        wolf.energy_gain(WOLF_ENERGY_GAIN)
+                        wolf.energy_gain(WOLF_ENERGY_FROM_SHEEP)
                         sheep.alive = False  ## Le mouton est tué ##
                         break  ## Sortir de la boucle une fois le mouton trouvé et mangé ##
 
@@ -199,7 +199,7 @@ class Grid:
             ## Tous les moutons adjacents au loup après son déplacement sont mangés ##
             for sheep in self.list_sheep.copy():
                 if sheep.position in adjacent_positions:
-                    wolf.energy_gain(WOLF_ENERGY_GAIN)
+                    wolf.energy_gain(WOLF_ENERGY_FROM_SHEEP)
                     sheep.alive = False  ## Le mouton est tué ##
             
             ## NB : le loup perd de l'energie en se déplaçant (déjà géré dans la méthode deplace) ##
@@ -220,7 +220,7 @@ class Grid:
         ## Le nouveau mouton est placé sur une case adjacente vide aléatoirement ##
         ## Si aucune case adjacente n'est libre, pas de reproduction ##
         for sheep in self.list_sheep.copy():
-            if sheep.energy >= SHEEP_REPRODUCTION_ENERGY:
+            if sheep.energy >= SHEEP_REPRODUCTION_THRESHOLD:
                 x, y = sheep.position
                 adjacent_positions = [ (x+dx, y+dy) for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)] 
                                        if 0 <= x+dx < self.width and 0 <= y+dy < self.height ]
@@ -230,11 +230,11 @@ class Grid:
                     new_position = free_positions[0] ## Prendre la première position libre ##
                     new_sheep = Sheep(id=len(self.list_sheep), position=new_position, energy=SHEEP_INITIAL_ENERGY, age=0, alive=True)
                     self.add_sheep(new_sheep)
-                    sheep.energy -= SHEEP_INITIAL_ENERGY  ## Coût énergétique de la reproduction ##
+                    sheep.energy -= REPRODUCTION_ENERGY_COST  ## Coût énergétique de la reproduction ##
         
         ## GESTION DE LA REPRODUCTION - LOUPS ##
         for wolf in self.list_wolf.copy():
-            if wolf.energy >= WOLF_REPRODUCTION_ENERGY:
+            if wolf.energy >= WOLF_REPRODUCTION_THRESHOLD:
                 x, y = wolf.position
                 adjacent_positions = [ (x+dx, y+dy) for dx, dy in [(-1,0), (1,0), (0,-1), (0,1)] 
                                        if 0 <= x+dx < self.width and 0 <= y+dy < self.height ]
@@ -244,7 +244,7 @@ class Grid:
                     new_position = free_positions[0] ## Prendre la première position libre ##
                     new_wolf = Wolf(id=len(self.list_wolf), position=new_position, energy=WOLF_INITIAL_ENERGY, age=0, alive=True)
                     self.add_wolf(new_wolf)
-                    wolf.energy -= WOLF_INITIAL_ENERGY / 2  ## Coût énergétique de la reproduction ##
+                    wolf.energy -= REPRODUCTION_ENERGY_COST  ## Coût énergétique de la reproduction ##
 
         ## AFFICHAGE DE L'ÉTAT ACTUEL DE LA GRILLE ##
         self.display_grid()

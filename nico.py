@@ -29,8 +29,3 @@ class Wolf:
             self.alive = False
     
 
-
-
-
-w = Wolf(1, (10, 20), 100, 5)
-print(w)  
