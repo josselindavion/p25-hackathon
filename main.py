@@ -1,4 +1,5 @@
 ## Importation des classes ##
+import numpy as np
 from nico import Wolf
 from jo import Sheep, Grass, Grid
 
