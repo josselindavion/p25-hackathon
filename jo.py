@@ -92,6 +92,7 @@ class Grid:
 
         ## Initialisation de l'herbe sur la grille ##
         ## Il faut avoir de la grass alive sur un pourcentage INITIAL_GRASS_COVERAGE ##
+        ## L'age de chaque herbe est initialisé random entre 0 et GRASS_REGROWTH_TIME ##
         total_cells = self.width * self.height
         initial_grass_count = int(total_cells * INITIAL_GRASS_COVERAGE)
         while len([grass for grass in self.list_grass if grass.alive]) < initial_grass_count:
@@ -100,7 +101,7 @@ class Grid:
             ## Eviter de créer plusieurs herbes au même endroit ##
             position_occupied = any(grass.position == (x,y) for grass in self.list_grass)
             if not position_occupied:
-                new_grass = Grass(position=(x,y), age=0, alive=True)
+                new_grass = Grass(position=(x,y), age=np.random.randint(0, GRASS_REGROWTH_TIME), alive=True)
                 self.list_grass.append(new_grass)
         
         # Mettre de la grass morte sur le reste des cases
